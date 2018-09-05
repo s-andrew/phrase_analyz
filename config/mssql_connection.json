@@ -1,0 +1,10 @@
+{
+  "connection_string": "mssql+pyodbc:///?odbc_connect=DRIVER={driver};SERVER={host};DATABASE={db};UID={user};PWD={password}",
+  "connection_params":{
+    "driver": "ODBC Driver 11 for SQL Server",
+    "host": "localhost",
+    "db": "",
+    "user": "sa",
+    "password": "3korif8245ef"
+  }
+}
