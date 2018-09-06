@@ -2,12 +2,11 @@ import re
 from itertools import combinations
 from collections import Callable
 
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session
 
 from .models import Phrase, Word, Gram
 
 REGEX = re.compile(r'[^\sa-zA-Zа-яА-Я]')
-Session = sessionmaker()
 
 
 def default_preprocessor(text):
