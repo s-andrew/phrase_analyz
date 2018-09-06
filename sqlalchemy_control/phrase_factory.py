@@ -1,6 +1,6 @@
 import re
 from itertools import combinations
-from collections import Callable
+from typing import Callable
 
 from sqlalchemy.orm import Session
 
@@ -13,10 +13,16 @@ def default_preprocessor(text):
     return REGEX.sub('', text).lower().split()
 
 
-def phrase_consistency_factory(text: str, phrase_owner_id: str, period: int,
-                               session: Session, preprocessor: Callable=None, commit: bool=True,):
+def default_gram_key_function(words: list):
+    return '_'.join(map(str, sorted(map(lambda w: w.value, words))))
+
+
+def phrase_consistency_factory(text: str, phrase_owner_id: str, period: int, session: Session,
+                               preprocessor: Callable=None, gram_key_function: Callable=None, commit: bool=True):
     if preprocessor is None:
         preprocessor = default_preprocessor
+    if gram_key_function in None:
+        gram_key_function = default_gram_key_function
     words_values = set(preprocessor(text))
     exist_words = session.query(Word).filter(Word.value.in_(words_values)).all()
     exist_words_map = {word.value: word for word in exist_words}
@@ -40,5 +46,12 @@ def phrase_consistency_factory(text: str, phrase_owner_id: str, period: int,
     return phrase
 
 
-def gram_key_function(words):
-    return '_'.join(map(str, sorted(map(lambda w: w.word_id, words))))
+def phrase_factory(text: str, phrase_owner_id: str, period: int, session: Session, commit: bool=True):
+    phrase = Phrase(phrase_owner_id=phrase_owner_id, value=text, period=period)
+    session.add(phrase)
+    session.flush()
+    if commit:
+        session.commit()
+    return phrase
+
+
