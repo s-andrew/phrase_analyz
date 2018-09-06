@@ -10,5 +10,7 @@ if __name__ == '__main__':
         "Hello, I love you, let me jump in your game"
     ]
 
-    phrases = [phrase_consistency_factory(text, session) for text in phrases]
+    phrases = [phrase_consistency_factory(text, 'PHRASE_OWNER_STUB', 666, session, commit=False) for text in phrases]
+    session.commit()
 
+    # print(phrases)

@@ -4,16 +4,16 @@ from hashlib import md5
 
 
 class Phrase:
-    def __init__(self, phrase_id=None, phrase_owner_id=None, value: str = None,\
+    def __init__(self, phrase_id:int=None, phrase_owner_id:str=None, value: str = None,\
                  create_time: datetime.datetime = None, period: int = None,\
-                 words: list = None, grams: list = None):
+                 words: list= None, grams: list = None):
         self.phrase_id = phrase_id
         self.phrase_owner_id = phrase_owner_id
         self.value = value
         self.create_time = create_time
         self.period = period
         if words is None:
-            self.words = []
+            self.add_words(*words)
         else:
             self.words = words
         if grams is None:
@@ -26,8 +26,10 @@ class Phrase:
         for word in words:
             if isinstance(word, Word):
                 self.words.append(word)
-            else:
+            elif isinstance(word, str):
                 self.words.append(Word(value=word))
+            else:
+                raise TypeError('*words must be list<Word|str>')
         return
 
     def __str__(self):

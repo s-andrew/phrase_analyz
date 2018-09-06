@@ -15,13 +15,14 @@ def default_preprocessor(text):
 
 
 
-def phrase_consistency_factory(text:str, session:Session, preprocessor:Callable=None):
+def phrase_consistency_factory(text:str, phrase_owner_id:str, period:int,
+                               session:Session, preprocessor:Callable=None, commit:bool=True,):
     if preprocessor is None:
         preprocessor = default_preprocessor
     words_values = set(preprocessor(text))
     exist_words = session.query(Word).filter(Word.value.in_(words_values)).all()
     exist_words_map = {word.value: word for word in exist_words}
-    words = [exist_words_map.get(value, Word(value=value)) for value in words_values]
+    words = [exist_words_map.get(value, Word(value=str(value))) for value in words_values]
     session.add_all(words)
     session.flush()
 
@@ -33,11 +34,13 @@ def phrase_consistency_factory(text:str, session:Session, preprocessor:Callable=
     session.add_all(grams)
     session.flush()
 
-    phrase = Phrase(phrase_owner_id='PHRASE_OWNER_STUB', value=text, period=666, words=words, grams=grams)
+    phrase = Phrase(phrase_owner_id=phrase_owner_id, value=text, period=period, words=words, grams=grams)
     session.add(phrase)
-    session.commit()
+    session.flush()
+    if commit:
+        session.commit()
     return phrase
 
 
 def gram_key_function(words):
-    return '_'.join(sorted(map(lambda w: str(w.word_id), words)))
+    return '_'.join(map(str, sorted(map(lambda w: w.word_id, words))))

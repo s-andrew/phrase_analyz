@@ -26,6 +26,7 @@ class SqlalchemyControl:
         self.metadata, tables = metadata_factory(scheme_mapper)
         map_model(tables, Phrase, Word, Gram)
         self.engine = create_engine(connection_string, echo=True)
-        self.metadata.create_all(self.engine)
+        if create:
+            self.metadata.create_all(self.engine)
         self.get_session = sessionmaker(bind=self.engine)
         return
