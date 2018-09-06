@@ -10,7 +10,7 @@ from .models import Phrase, Word, Gram
 from .schema_mapper import scheme_mapper_factory
 
 
-def connection_string_from_config(file_name:str):
+def connection_string_from_config(file_name: str):
     with open(file_name) as file:
         config = json.loads(file.read())
     connection_string = config.get('connection_string')

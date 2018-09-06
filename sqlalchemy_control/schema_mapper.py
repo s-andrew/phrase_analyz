@@ -5,12 +5,13 @@ SCHEMA_NAME = 'schema_name'
 TABLE_NAME = 'table_name'
 TABLES = 'tables'
 
+
 def dict_xpath(root: dict, path: str, sch='/'):
     return reduce(lambda acc, nxt: acc[nxt], path.split(sch), root)
 
 
-def scheme_mapper_factory(config_file:str, schema_in_name:bool=False, path_sch:str='.',
-                          esc:str='"', esc_close:str=None, special_keys:dict=None):
+def scheme_mapper_factory(config_file: str, schema_in_name: bool=False, path_sch: str='.',
+                          esc: str='"', esc_close: str=None, special_keys: dict=None):
     with open(config_file) as file:
         config = json.loads(file.read())
     schema_name = config[SCHEMA_NAME] if schema_in_name else None
@@ -21,8 +22,8 @@ def scheme_mapper_factory(config_file:str, schema_in_name:bool=False, path_sch:s
 
 
 class SchemeMapper():
-    def __init__(self, tables:dict, schema_name:str=None, path_sch:str='.',
-                 esc:str='"', esc_close:str=None, special_keys:dict=None):
+    def __init__(self, tables: dict, schema_name: str=None, path_sch:str='.',
+                 esc: str='"', esc_close: str=None, special_keys: dict=None):
         self.tables = tables
         self.schema_name = schema_name
         self.path_sch = path_sch

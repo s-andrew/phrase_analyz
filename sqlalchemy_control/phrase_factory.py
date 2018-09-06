@@ -14,9 +14,8 @@ def default_preprocessor(text):
     return REGEX.sub('', text).lower().split()
 
 
-
-def phrase_consistency_factory(text:str, phrase_owner_id:str, period:int,
-                               session:Session, preprocessor:Callable=None, commit:bool=True,):
+def phrase_consistency_factory(text: str, phrase_owner_id: str, period: int,
+                               session: Session, preprocessor: Callable=None, commit: bool=True,):
     if preprocessor is None:
         preprocessor = default_preprocessor
     words_values = set(preprocessor(text))

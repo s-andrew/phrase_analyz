@@ -1,4 +1,4 @@
-from sqlalchemy.orm import  mapper, relationship
+from sqlalchemy.orm import mapper, relationship
 
 
 def map_model(tables, Phrase, Word, Gram):

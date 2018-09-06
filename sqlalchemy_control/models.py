@@ -4,7 +4,7 @@ from hashlib import md5
 
 
 class Phrase:
-    def __init__(self, phrase_id:int=None, phrase_owner_id:str=None, value: str = None,\
+    def __init__(self, phrase_id: int=None, phrase_owner_id: str=None, value: str = None,\
                  create_time: datetime.datetime = None, period: int = None,\
                  words: list= None, grams: list = None):
         self.phrase_id = phrase_id
@@ -38,6 +38,7 @@ class Phrase:
     def __repr__(self):
         return 'Phrase(phrase_id={phrase_id}, value={value}, words={words}, grams={grams})'.format_map(self.__dict__)
 
+
 @total_ordering
 class Word:
     def __init__(self, word_id=None, value: str = None):
@@ -70,7 +71,6 @@ class Gram:
         self.gram_id = gram_id
         self.key = key
         self.words = words
-
 
     def __str__(self):
         return 'Gram(gram_id={gram_id}, words={words})'.format_map(self.__dict__)

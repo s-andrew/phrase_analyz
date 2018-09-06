@@ -3,8 +3,8 @@ import pymorphy2
 
 
 class PhrasePreprocessor:
-    def __init__(self, regex:list=None, min_max_word_len:tuple=(1, 10),
-                 min_max_phrase_len:tuple=(1, 100), stop_pos:list=None):
+    def __init__(self, regex: list=None, min_max_word_len: tuple=(1, 10),
+                 min_max_phrase_len: tuple=(1, 100), stop_pos: list=None):
         if regex is not None:
             self.regex = list(map(lambda r: re.compile(r), regex))
         else:
@@ -17,20 +17,20 @@ class PhrasePreprocessor:
         else:
             self.stop_pos = []
 
-    def normalize(self, text:str):
+    def normalize(self, text: str):
         text = text.lower()
         for r in self.regex:
             text = r.sub(' ', text)
         words = text.split()
         words = map(lambda w: w.strip(), words)
-        words = filter(lambda w: len(w) >= self.min_word_len and len(w) <= self.max_word_len, words)
+        words = filter(lambda w: self.min_word_len <= len(w) <= self.max_word_len, words)
         words = map(self.word_normalize, words)
         words = filter(lambda wp: wp[1] not in self.stop_pos, words)
         words = map(lambda wp: wp[0], words)
         words = list(set(words))
         return words
 
-    def word_normalize(self, word:str):
+    def word_normalize(self, word: str):
         w = self.morph.parse(word)
         w = w[0]
         return w.normal_form, w.tag.POS
