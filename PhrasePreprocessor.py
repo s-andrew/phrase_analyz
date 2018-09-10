@@ -1,10 +1,12 @@
 import re
+from typing import List, Tuple
+
 import pymorphy2
 
 
 class PhrasePreprocessor:
-    def __init__(self, regex: list=None, min_max_word_len: tuple=(1, 10),
-                 min_max_phrase_len: tuple=(1, 100), stop_pos: list=None):
+    def __init__(self, regex: List[str]=None, min_max_word_len: Tuple[int, int]=(1, 10),
+                 min_max_phrase_len: Tuple[int, int]=(1, 100), stop_pos: List[str]=None):
         if regex is not None:
             self.regex = list(map(lambda r: re.compile(r), regex))
         else:

@@ -1,20 +1,6 @@
 {
   "schema_name": "dbo",
   "tables": {
-    "words": {
-      "table_name": "V1_WORDS",
-      "columns":{
-        "word_id": "word_id",
-        "value": "value"
-      }
-    },
-    "grams": {
-      "table_name": "V1_GRAMS",
-      "columns": {
-        "gram_id": "gram_id",
-        "key": "hash_md5"
-      }
-    },
     "phrases": {
       "table_name": "V1_PHRASES",
       "columns": {
@@ -23,27 +9,6 @@
         "value": "search_phrase",
         "create_time": "create_time",
         "period": "period"
-      }
-    },
-    "phrase_word": {
-      "table_name": "V1_PHRASE_WORD",
-      "columns": {
-        "phrase_id": "phrase_id",
-        "word_id": "word_id"
-      }
-    },
-    "phrase_gram": {
-      "table_name": "V1_PHRASE_GRAM",
-      "columns": {
-        "phrase_id": "phrase_id",
-        "gram_id": "gram_id"
-      }
-    },
-    "gram_word": {
-      "table_name": "V1_GRAM_WORD",
-      "columns": {
-        "gram_id": "gram_id",
-        "word_id": "word_id"
       }
     }
   }

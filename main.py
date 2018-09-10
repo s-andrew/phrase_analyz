@@ -1,7 +1,6 @@
-from sqlalchemy_control import SqlalchemyControl
-from sqlalchemy_control.phrase_factory import phrase_consistency_factory
 from PhrasePreprocessor import PhrasePreprocessor
-from get_phrase_gram_keys import get_phrase_gram_keys
+from phrase_storage import PhraseStorage
+from servises import emplace_and_save_phrases, get_owner_grams_keys
 
 if __name__ == '__main__':
     phrases = [
@@ -9,15 +8,11 @@ if __name__ == '__main__':
         "Hello, I love you, let me jump in your game"
     ]
 
-    db = SqlalchemyControl('config/sqlite_connection.json', 'config/schema.json', create=True)
-    session = db.get_session()
+    owner = 'PHRASE_OWNER_STUB'
+    phrases = [(phrase, owner, 666) for phrase in phrases]
+    storage = PhraseStorage("sqlite:///:memory:")
+    emplace_and_save_phrases(phrases, storage)
+
     preprocessor = PhrasePreprocessor()
-    gram_key_func = lambda words: '_'.join(sorted(words))
-
-    keys = [get_phrase_gram_keys(phrase, preprocessor.normalize, gram_key_func) for phrase in phrases]
-    print(*keys, sep='\n')
-
-
-    phrases = [phrase_consistency_factory(text, 'PHRASE_OWNER_STUB', 666, session,
-                                          commit=False, preprocessor=preprocessor.normalize) for text in phrases]
-    session.commit()
+    grams_keys = get_owner_grams_keys([owner], storage, preprocessor.normalize, lambda words: '_'.join(sorted(words)))
+    print(*grams_keys, sep='\n')
