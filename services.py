@@ -36,8 +36,9 @@ def load_model(models_id: int) -> CrossModel:
 def predict_risk_group_by_owner(owner_list: List[str], models_id: List[int], storage: PhraseStorage,
                                 preprocessor: Callable[[str], Tuple[str]]):
     grams_key = get_owner_grams_keys(owner_list, storage, preprocessor, lambda words: '_'.join(sorted(words)))
-    prediction = dict()
+    predictions = dict()
     for model_id in models_id:
         model = load_model(model_id)
-        prediction.update({model_id: model.getRiskGroup(list(grams_key))})
-    return prediction
+        predict = model.getRiskGroup(list(grams_key))._asdict()
+        predictions.update({model_id: predict})
+    return predictions
