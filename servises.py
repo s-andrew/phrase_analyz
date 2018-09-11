@@ -19,7 +19,7 @@ def save_phrases(phrases: List[Phrase], storage: PhraseStorage) -> None:
     return
 
 
-def emplace_and_save_phrases(phrases_details: Tuple[PhraseText, PhraseOwnerId, Period], storage: PhraseStorage) -> None:
+def emplace_and_save_phrases(phrases_details: List[Tuple[PhraseText, PhraseOwnerId, Period]], storage: PhraseStorage) -> None:
     phrases = [create_phrase_with_required_attrs(*phrd) for phrd in phrases_details]
     save_phrases(phrases, storage)
     return
