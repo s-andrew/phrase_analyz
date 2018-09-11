@@ -1,6 +1,6 @@
 from PhrasePreprocessor import PhrasePreprocessor
 from phrase_storage import PhraseStorage
-from servises import emplace_and_save_phrases, get_owner_grams_keys
+from phrase_tools import emplace_and_save_phrases, get_owner_grams_keys
 
 if __name__ == '__main__':
     phrases = [
